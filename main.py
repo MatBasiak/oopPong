@@ -1,6 +1,6 @@
 import pygame, sys, os
 from pygame.sprite import AbstractGroup
-from pygame.math import Vector2
+
 
 
 class Board:
@@ -12,11 +12,11 @@ class Board:
         self.middle_line = pygame.draw.line(self.screen, (255, 255, 255), (width / 2, 0), (width / 2, height))
 
     def draw_player(self, color, x, y):
-        pygame.draw.rect(self.screen, color, pygame.Rect(x, y, 20, 105))
+        pygame.draw.rect(self.screen, color, pygame.Rect(x, y, 20, 100))
         pygame.display.update()
 
     def draw_ball(self, color, x, y):
-        pygame.draw.rect(self.screen, color, pygame.Rect(x, y, 20, 20))
+        pygame.draw.circle(self.screen, color, (x, y), 20, 20)
         pygame.display.update()
 
 
@@ -37,8 +37,8 @@ class Player(pygame.sprite.Sprite):
         return self.__name
 
     def update(self, pressed_key):
-        if pressed_key[pygame.K_SPACE]:
-            self.color = (45, 12, 200)
+        if pressed_key[pygame.K_s]:
+            self.color = (0, 5, 55)
             pygame.display.flip()
 
 
@@ -57,21 +57,22 @@ class Game:
         self.clock.tick(30)
         player1 = Player("Player 1", (125, 124, 255))
         player2 = Player("Player 2", (255, 255, 255))
-        player1_position = screen.screen
-        screen.draw_player(player1.color, 50, 50)
-        screen.draw_player(player2.color, 650, 250)
-        screen.draw_ball((125, 150, 145), 250, 250)
+
+        screen.draw_player(player1.color, 10, 50)
+        screen.draw_player(player2.color, Game.SCREEN_WIDTH - 30, Game.SCREEN_HEIGHT - 150)
+        screen.draw_ball((125, 150, 145), Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT / 2)
 
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit(0)
-                if event.type == pygame.KEYDOWN and pygame.K_ESCAPE:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit(0)
 
             pressed_key = pygame.key.get_pressed()
+
             player1.update(pressed_key)
 
 
