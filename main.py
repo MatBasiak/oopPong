@@ -1,12 +1,20 @@
-import pygame, sys
+import pygame, sys, os
 
 
-class Player:
+class Board:
+    def __init__(self):
+        self.screen = pygame.display.set_mode((720, 480))
+        pygame.display.set_caption("PONG")
+        self.icon = pygame.image.load('assets/ping-pong.png')
+        pygame.display.set_icon(self.icon)
+
+
+class Player():
     def __init__(self, name):
-        super(Game, self).__init()
+
         self.__name = name
         self.__points = 0
-        self.rect = pygame.draw.rect(Game.screen, (20, 50))
+        self.rect =
 
     def add_points(self):
         self.__points += 1
@@ -22,23 +30,26 @@ class Player:
             pass
 
 
-class Board:
-    def __init__(self):
-        screen = pygame.display.set_mode((720, 480))
-        pygame.display.set_caption("PONG")
+class Ball:
+    pass
 
 
 class Game:
-    screen = Board()
-    # player1 = Player(input("Player 1 - enter Your name: "))
-    # player1 = Player(input("Player 2 - enter Your name: "))
+    def __init__(self):
+        pygame.init()
+        self.clock = pygame.time.Clock()
+        self.clock.tick(30)
+        # player1 = Player("Player 1", self.screen)
+        # player1 = Player(input("Player 2 - enter Your name: "))
 
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit(0)
-            if event.type == pygame.KEYDOWN and pygame.K_ESCAPE:
-                sys.exit(0)
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit(0)
+                if event.type == pygame.KEYDOWN and pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit(0)
 
 
 if __name__ == '__main__':
