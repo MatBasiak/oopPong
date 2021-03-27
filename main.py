@@ -4,12 +4,12 @@ from pygame.math import Vector2
 
 
 class Board:
-    def __init__(self):
-        self.screen = pygame.display.set_mode((920, 680))
+    def __init__(self, width, height):
+        self.screen = pygame.display.set_mode((width, height))
         pygame.display.set_caption("PONG")
         self.icon = pygame.image.load('assets/ping-pong.png')
         pygame.display.set_icon(self.icon)
-        self.middle_line = pygame.draw.line(self.screen, (255, 255, 255), (460,0),(460,680))
+        self.middle_line = pygame.draw.line(self.screen, (255, 255, 255), (width / 2, 0), (width / 2, height))
 
     def draw_player(self, color, x, y):
         pygame.draw.rect(self.screen, color, pygame.Rect(x, y, 20, 105))
@@ -21,11 +21,11 @@ class Board:
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, name, *groups: AbstractGroup):
+    def __init__(self, name, color, *groups: AbstractGroup):
         super().__init__(*groups)
         self.__name = name
         self.__points = 0
-        self.color = (125, 125, 125)
+        self.color = color
 
     def add_points(self):
         self.__points += 1
@@ -47,17 +47,20 @@ class Ball:
 
 
 class Game:
+    SCREEN_WIDTH = 800
+    SCREEN_HEIGHT = 600
+
     def __init__(self):
         pygame.init()
-        screen = Board()
+        screen = Board(Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT)
         self.clock = pygame.time.Clock()
         self.clock.tick(30)
-        player1 = Player("Player 1")
-        player2 = Player("Player 2")
+        player1 = Player("Player 1", (125, 124, 255))
+        player2 = Player("Player 2", (255, 255, 255))
+        player1_position = screen.screen
         screen.draw_player(player1.color, 50, 50)
         screen.draw_player(player2.color, 650, 250)
         screen.draw_ball((125, 150, 145), 250, 250)
-        # player1 = Player(input("Player 2 - enter Your name: "))
 
         while True:
             for event in pygame.event.get():
